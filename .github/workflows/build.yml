@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,49 +24,18 @@ jobs:
           flutter-version: '3.24.5'
           channel: 'stable'
 
-<<<<<<< Updated upstream
-      - name: Create asset directories and download fonts
-        run: |
-          mkdir -p assets/fonts assets/images assets/animations
-          touch assets/images/.gitkeep
-          touch assets/animations/.gitkeep
-          curl -fL "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/Vazirmatn-Regular.ttf" -o assets/fonts/Vazirmatn-Regular.ttf
-          curl -fL "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/Vazirmatn-Bold.ttf" -o assets/fonts/Vazirmatn-Bold.ttf
-          curl -fL "https://github.com/rastikerdar/vazirmatn/raw/master/fonts/Vazirmatn-Light.ttf" -o assets/fonts/Vazirmatn-Light.ttf
-
-      - name: Get Flutter dependencies
-        run: flutter pub get
-
-      - name: Analyze code
-        run: flutter analyze --no-fatal-infos 2>&1 | tee /tmp/analyze.log || true
-
-      - name: Build APK and capture errors
-        run: |
-          flutter build apk --release 2>&1 | tee /tmp/build.log
-          echo "Exit code: ${PIPESTATUS[0]}"
-
-=======
       - name: Get Flutter dependencies
         run: flutter pub get
 
       - name: Build APK
         run: flutter build apk --release 2>&1 | tee build_log.txt
 
->>>>>>> Stashed changes
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-<<<<<<< Updated upstream
-          name: build-logs
-          path: |
-            /tmp/build.log
-            /tmp/analyze.log
-          retention-days: 7
-=======
           name: build-log
           path: build_log.txt
->>>>>>> Stashed changes
 
       - name: Upload APK
         if: success()
@@ -82,7 +50,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ github.run_number }}
-          name: سرکوب v${{ github.run_number }}
+          name: "sarkoob v${{ github.run_number }}"
           files: build/app/outputs/flutter-apk/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

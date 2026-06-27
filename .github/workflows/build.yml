@@ -29,25 +29,15 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
-      - name: Run Gradle directly to see real error
-        run: |
-          cd android
-          ./gradlew assembleRelease 2>&1 | tee ../gradle_real.txt || true
+      - name: Build APK
+        run: flutter build apk --release
 
-      - name: Flutter build
-        run: flutter build apk --release 2>&1 | tee flutter_real.txt || true
-
-      - name: Save logs to repo
-        if: always()
+      - name: Save APK to releases folder
         run: |
+          mkdir -p releases
+          cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob.apk
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          cat gradle_real.txt flutter_real.txt > build_output.txt 2>/dev/null || true
-          if [ -f build/app/outputs/flutter-apk/app-release.apk ]; then
-            mkdir -p releases
-            cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob.apk
-            git add releases/sarkoob.apk
-          fi
-          git add build_output.txt gradle_real.txt flutter_real.txt 2>/dev/null || true
-          git commit -m "ci: logs [skip ci]" || true
-          git push || true
+          git add releases/sarkoob.apk
+          git commit -m "release: APK v${{ github.run_number }} [skip ci]"
+          git push

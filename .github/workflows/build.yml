@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,29 +30,21 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release 2>&1 | tee build_log.txt
+        run: flutter build apk --release
 
-      - name: Upload build log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: build_log.txt
-
-      - name: Upload APK
-        if: success()
+      - name: Upload APK as artifact
         uses: actions/upload-artifact@v4
         with:
           name: sarkoob-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
 
-      - name: Create Release
-        if: success()
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ github.run_number }}
-          name: "sarkoob v${{ github.run_number }}"
-          files: build/app/outputs/flutter-apk/app-release.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Copy APK to repo and push
+        run: |
+          mkdir -p releases
+          cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob-latest.apk
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+          git add releases/sarkoob-latest.apk
+          git commit -m "release: update APK [skip ci]" || echo "No changes"
+          git push

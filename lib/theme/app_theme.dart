@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SarkoobTheme {
-  // رنگ‌های اصلی
   static const Color background = Color(0xFF0A0A0F);
   static const Color surface = Color(0xFF12121A);
   static const Color surfaceVariant = Color(0xFF1A1A26);
-  static const Color primary = Color(0xFFB8860B); // طلایی تیره
+  static const Color primary = Color(0xFFB8860B);
   static const Color primaryLight = Color(0xFFD4A017);
-  static const Color accent = Color(0xFF8B0000); // قرمز تیره
+  static const Color accent = Color(0xFF8B0000);
   static const Color accentLight = Color(0xFFCC2222);
   static const Color textPrimary = Color(0xFFEEEEEE);
   static const Color textSecondary = Color(0xFF999999);
   static const Color textMuted = Color(0xFF555555);
   static const Color border = Color(0xFF2A2A3A);
   static const Color cardBg = Color(0xFF161622);
-  static const Color success = Color(0xFF2D6A4F);
-  static const Color error = Color(0xFF8B0000);
-
-  // گرادیان‌ها
-  static const LinearGradient primaryGradient = LinearGradient(
-    colors: [Color(0xFF8B6914), Color(0xFFD4A017)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
 
   static const LinearGradient darkGradient = LinearGradient(
     colors: [Color(0xFF0A0A0F), Color(0xFF12121A)],
@@ -31,16 +20,11 @@ class SarkoobTheme {
     end: Alignment.bottomCenter,
   );
 
-  static const LinearGradient cardGradient = LinearGradient(
-    colors: [Color(0xFF1A1A26), Color(0xFF12121A)],
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-  );
-
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
       scaffoldBackgroundColor: background,
+      fontFamily: 'Vazirmatn',
       colorScheme: const ColorScheme.dark(
         primary: primary,
         secondary: accent,
@@ -50,26 +34,21 @@ class SarkoobTheme {
         onSecondary: Colors.white,
         onSurface: textPrimary,
       ),
-      textTheme: GoogleFonts.vazirmatnTextTheme(
-        const TextTheme(
-          displayLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold),
-          displayMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.bold),
-          titleLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold),
-          titleMedium: TextStyle(color: textPrimary),
-          bodyLarge: TextStyle(color: textPrimary),
-          bodyMedium: TextStyle(color: textSecondary),
-          labelLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold),
-        ),
+      textTheme: const TextTheme(
+        displayLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn'),
+        displayMedium: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn'),
+        titleLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn'),
+        titleMedium: TextStyle(color: textPrimary, fontFamily: 'Vazirmatn'),
+        bodyLarge: TextStyle(color: textPrimary, fontFamily: 'Vazirmatn'),
+        bodyMedium: TextStyle(color: textSecondary, fontFamily: 'Vazirmatn'),
+        labelLarge: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn'),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: surface,
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
-          color: primary,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Vazirmatn',
+          color: primary, fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn',
         ),
         iconTheme: IconThemeData(color: primary),
       ),
@@ -88,11 +67,7 @@ class SarkoobTheme {
           elevation: 8,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          textStyle: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Vazirmatn',
-          ),
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Vazirmatn'),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(

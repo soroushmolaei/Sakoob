@@ -13,19 +13,20 @@ Starting a Gradle Daemon (subsequent builds will be faster)
 > Task :gradle:processResources
 > Task :gradle:classes
 > Task :gradle:jar
-WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 34
 
-This Android Gradle plugin (8.1.0) was tested up to compileSdk = 33 (and compileSdkPreview = "UpsideDownCakePrivacySandbox").
+> Configure project :shared_preferences_android
+Warning: The plugin shared_preferences_android requires Android SDK version 34 or higher.
+For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
+Your project is configured to compile against Android SDK 33, but the following plugin(s) require to be compiled against a higher Android SDK version:
+- shared_preferences_android compiles against Android SDK 34
+Fix this issue by compiling against the highest Android SDK version (they are backward compatible).
+Add the following to /home/runner/work/Sakoob/Sakoob/android/app/build.gradle:
 
-You are strongly encouraged to update your project to use a newer
-Android Gradle plugin that has been tested with compileSdk = 34.
+    android {
+        compileSdk = 34
+        ...
+    }
 
-If you are already using the latest version of the Android Gradle plugin,
-you may need to wait until a newer version with support for compileSdk = 34 is available.
-
-To suppress this warning, add/update
-    android.suppressUnsupportedCompileSdk=34
-to this project's gradle.properties.
 Checking the license for package Android SDK Build-Tools 33.0.1 in /usr/local/lib/android/sdk/licenses
 License for package Android SDK Build-Tools 33.0.1 accepted.
 Preparing "Install Android SDK Build-Tools 33.0.1 v.33.0.1".
@@ -33,31 +34,41 @@ Preparing "Install Android SDK Build-Tools 33.0.1 v.33.0.1".
 Installing Android SDK Build-Tools 33.0.1 in /usr/local/lib/android/sdk/build-tools/33.0.1
 "Install Android SDK Build-Tools 33.0.1 v.33.0.1" complete.
 "Install Android SDK Build-Tools 33.0.1 v.33.0.1" finished.
+Checking the license for package Android SDK Platform 33 in /usr/local/lib/android/sdk/licenses
+License for package Android SDK Platform 33 accepted.
+Preparing "Install Android SDK Platform 33 (revision 3)".
+"Install Android SDK Platform 33 (revision 3)" ready.
+Installing Android SDK Platform 33 in /usr/local/lib/android/sdk/platforms/android-33
+"Install Android SDK Platform 33 (revision 3)" complete.
+"Install Android SDK Platform 33 (revision 3)" finished.
+
 > Task :shared_preferences_android:preBuild UP-TO-DATE
 > Task :shared_preferences_android:preReleaseBuild UP-TO-DATE
 > Task :shared_preferences_android:mergeReleaseJniLibFolders
 > Task :shared_preferences_android:mergeReleaseNativeLibs NO-SOURCE
 > Task :shared_preferences_android:stripReleaseDebugSymbols NO-SOURCE
-> Task :shared_preferences_android:generateReleaseResValues
 > Task :shared_preferences_android:copyReleaseJniLibsProjectAndLocalJars
+> Task :shared_preferences_android:generateReleaseResValues
 > Task :shared_preferences_android:extractDeepLinksForAarRelease
 > Task :shared_preferences_android:generateReleaseResources
 > Task :shared_preferences_android:packageReleaseResources
-> Task :shared_preferences_android:mergeReleaseShaders
 > Task :shared_preferences_android:javaPreCompileRelease
+> Task :shared_preferences_android:mergeReleaseShaders
 > Task :shared_preferences_android:compileReleaseShaders NO-SOURCE
 > Task :shared_preferences_android:generateReleaseAssets UP-TO-DATE
 > Task :shared_preferences_android:packageReleaseAssets
 > Task :shared_preferences_android:prepareLintJarForPublish
 > Task :shared_preferences_android:prepareReleaseArtProfile
-> Task :shared_preferences_android:writeReleaseAarMetadata
 > Task :shared_preferences_android:parseReleaseLocalResources
-> Task :app:buildKotlinToolingMetadata
 
 > Task :shared_preferences_android:processReleaseManifest
 package="io.flutter.plugins.sharedpreferences" found in source AndroidManifest.xml: /home/runner/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.7/android/src/main/AndroidManifest.xml.
 Setting the namespace via the package attribute in the source AndroidManifest.xml is no longer supported, and the value is ignored.
 Recommendation: remove package="io.flutter.plugins.sharedpreferences" from the source AndroidManifest.xml: /home/runner/.pub-cache/hosted/pub.dev/shared_preferences_android-2.4.7/android/src/main/AndroidManifest.xml.
+
+> Task :shared_preferences_android:writeReleaseAarMetadata
+> Task :app:buildKotlinToolingMetadata
+> Task :shared_preferences_android:generateReleaseRFile
 
 > Task :app:compileFlutterBuildRelease
 lib/theme/app_theme.dart:55:18: Error: Method not found: 'CardThemeData'.
@@ -81,10 +92,22 @@ Execution failed for task ':app:compileFlutterBuildRelease'.
 
 * Get more help at https://help.gradle.org
 
-BUILD FAILED in 1m 48s
-19 actionable tasks: 19 executed
+BUILD FAILED in 1m 51s
+20 actionable tasks: 20 executed
 
 Running Gradle task 'assembleRelease'...                        
+Warning: The plugin shared_preferences_android requires Android SDK version 34 or higher.
+For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
+Your project is configured to compile against Android SDK 33, but the following plugin(s) require to be compiled against a higher Android SDK version:
+- shared_preferences_android compiles against Android SDK 34
+Fix this issue by compiling against the highest Android SDK version (they are backward compatible).
+Add the following to /home/runner/work/Sakoob/Sakoob/android/app/build.gradle:
+
+    android {
+        compileSdk = 34
+        ...
+    }
+
 lib/theme/app_theme.dart:55:18: Error: Method not found: 'CardThemeData'.
       cardTheme: CardThemeData(
                  ^^^^^^^^^^^^^
@@ -104,6 +127,6 @@ Execution failed for task ':app:compileFlutterBuildRelease'.
 
 * Get more help at https://help.gradle.org
 
-BUILD FAILED in 8s
-Running Gradle task 'assembleRelease'...                            8.9s
+BUILD FAILED in 21s
+Running Gradle task 'assembleRelease'...                           22.0s
 Gradle task assembleRelease failed with exit code 1

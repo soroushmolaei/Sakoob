@@ -1,5 +1,17 @@
 
 Running Gradle task 'assembleRelease'...                        
+Warning: The plugin shared_preferences_android requires Android SDK version 34 or higher.
+For more information about build configuration, see https://flutter.dev/to/review-gradle-config.
+Your project is configured to compile against Android SDK 33, but the following plugin(s) require to be compiled against a higher Android SDK version:
+- shared_preferences_android compiles against Android SDK 34
+Fix this issue by compiling against the highest Android SDK version (they are backward compatible).
+Add the following to /home/runner/work/Sakoob/Sakoob/android/app/build.gradle:
+
+    android {
+        compileSdk = 34
+        ...
+    }
+
 lib/theme/app_theme.dart:55:18: Error: Method not found: 'CardThemeData'.
       cardTheme: CardThemeData(
                  ^^^^^^^^^^^^^
@@ -19,6 +31,6 @@ Execution failed for task ':app:compileFlutterBuildRelease'.
 
 * Get more help at https://help.gradle.org
 
-BUILD FAILED in 8s
-Running Gradle task 'assembleRelease'...                            8.9s
+BUILD FAILED in 21s
+Running Gradle task 'assembleRelease'...                           22.0s
 Gradle task assembleRelease failed with exit code 1

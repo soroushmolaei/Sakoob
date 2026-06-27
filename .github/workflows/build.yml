@@ -29,15 +29,29 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x android/gradlew
 
-      - name: Build APK
-        run: flutter build apk --release
-
-      - name: Save APK to releases folder
+      - name: Run Gradle
         run: |
-          mkdir -p releases
-          cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob.apk
+          cd android
+          ./gradlew assembleRelease 2>&1 | tee ../gradle_out.txt || true
+
+      - name: Flutter build
+        run: flutter build apk --release 2>&1 | tee flutter_out.txt || true
+
+      - name: Save APK and logs to repo
+        if: always()
+        run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git add releases/sarkoob.apk
-          git commit -m "release: APK v${{ github.run_number }} [skip ci]"
-          git push
+          if [ -f build/app/outputs/flutter-apk/app-release.apk ]; then
+            mkdir -p releases
+            cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob.apk
+            git add releases/sarkoob.apk
+            echo "APK SAVED" > build_status.txt
+          else
+            echo "APK NOT FOUND" > build_status.txt
+            cat gradle_out.txt >> build_status.txt 2>/dev/null || true
+            cat flutter_out.txt >> build_status.txt 2>/dev/null || true
+          fi
+          git add build_status.txt gradle_out.txt flutter_out.txt 2>/dev/null || true
+          git commit -m "ci: build result [skip ci]" || echo "nothing to commit"
+          git push || echo "push failed"

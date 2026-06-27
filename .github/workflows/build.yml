@@ -26,28 +26,18 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleRelease --stacktrace --info 2>&1 | grep -E "(FAILURE|ERROR|error:|Exception|What went wrong|Caused by|> Task|BUILD)" | head -80 > /tmp/gradle_errors.txt || true
-          cat /tmp/gradle_errors.txt
-          cd ..
-          flutter build apk --release 2>&1 > /tmp/flutter_build.txt || true
-          echo "=== FLUTTER OUTPUT ===" >> /tmp/gradle_errors.txt
-          cat /tmp/flutter_build.txt >> /tmp/gradle_errors.txt
-          cp /tmp/gradle_errors.txt build_output.txt
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
 
-      - name: Commit log to repo
-        if: always()
+      - name: Build APK
+        run: flutter build apk --release
+
+      - name: Save APK to repo
         run: |
+          mkdir -p releases
+          cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob.apk
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          if [ -f build/app/outputs/flutter-apk/app-release.apk ]; then
-            mkdir -p releases
-            cp build/app/outputs/flutter-apk/app-release.apk releases/sarkoob.apk
-            git add releases/sarkoob.apk
-          fi
-          git add build_output.txt
-          git commit -m "ci: build output [skip ci]" || true
-          git push || true
+          git add releases/sarkoob.apk
+          git commit -m "release: new APK build [skip ci]"
+          git push

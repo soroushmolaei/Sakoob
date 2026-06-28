@@ -52,7 +52,7 @@ class SarkoobTheme {
         ),
         iconTheme: IconThemeData(color: primary),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: cardBg,
         elevation: 8,
         shape: RoundedRectangleBorder(
